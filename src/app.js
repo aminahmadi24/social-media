@@ -6,12 +6,16 @@ const configs = require("./configs");
 const { setHeaders } = require("./middlewares/headers");
 const { notFound } = require("./middlewares/notFound");
 const { errorHandler } = require("./middlewares/errorHandler");
-
+const authRouter = require("./modules/auth/auth.routes");
+const cookieParser = require("cookie-parser");
 const app = express();
 
 // Body Parser
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+
+// Cookie Parser
+app.use(cookieParser());
 
 // Cors Policy
 app.use(setHeaders);
@@ -39,9 +43,11 @@ app.set("views", path.join(__dirname, "views"));
 app.get("/", (req, res) => {
     res.render("./index");
 });
+app.use("/auth", authRouter);
 
 
 
 app.use(notFound);
 app.use(errorHandler);
+
 module.exports = app;
