@@ -7,6 +7,7 @@ const { setHeaders } = require("./middlewares/headers");
 const { notFound } = require("./middlewares/notFound");
 const { errorHandler } = require("./middlewares/errorHandler");
 const authRouter = require("./modules/auth/auth.routes");
+const postRouter = require("./modules/post/post.routes");
 const cookieParser = require("cookie-parser");
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 app.use("/css", express.static(path.join(__dirname, "..", "public", "css")));
 app.use("/images", express.static(path.join(__dirname, "..", "public", "images")));
 app.use("/fonts", express.static(path.join(__dirname, "..", "public", "fonts")));
+app.use("/uploads", express.static(path.join(__dirname, "..", "public", "uploads")));
 
 // Express-Flash
 app.use(session({
@@ -44,7 +46,7 @@ app.get("/", (req, res) => {
     res.render("./index");
 });
 app.use("/auth", authRouter);
-
+app.use("/posts", postRouter);
 
 
 app.use(notFound);

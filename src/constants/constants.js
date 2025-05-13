@@ -1,4 +1,6 @@
-module.exports = Object.freeze({
+const constants = Object.freeze({
     accessToken: "accessToken",
-    refreshToken: "refreshToken"
-})
+    refreshToken: "refreshToken",
+    verifyMessage: "verifyMessage"
+});
+module.exports = constants;

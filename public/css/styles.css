@@ -676,6 +676,8 @@ input::placeholder {
     width: 1380px;
     background: white;
     border-radius: 12px;
+    margin: 160px 10px 10px 10px;
+    box-sizing: border-box;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.144);
     display: flex;
     padding: 64px;

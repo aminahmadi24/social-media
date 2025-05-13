@@ -10,10 +10,6 @@ const configs = require("../../configs");
 const constants = require("../../constants/constants");
 
 
-exports.checkPassword = async (plainPassword, hashedPassword) => {
-    return await bcrypt.compare(plainPassword, hashedPassword);
-}
-
 exports.showRegisterView = async (req, res, next) => {
     res.render("auth/register/index");
 }
@@ -36,7 +32,7 @@ exports.register = async (req, res, next) => {
             email, username, password, name, role
         });
         await user.save();
-        const accessToken = jwt.sign({ id: user._id }, configs.jwtSecret, { expiresIn: "30d" });
+        const accessToken = jwt.sign({ userID: user._id }, configs.jwtSecret, { expiresIn: "30d" });
         const refreshToken = await RefreshTokenModel.createToken(user);
 
         res.cookie(constants.accessToken, accessToken, {
@@ -71,7 +67,7 @@ exports.login = async (req, res, next) => {
             req.flash("error", messages.errors.invalildEmailOrPassword);
             return res.redirect("/auth/login");
         }
-        const accessToken = jwt.sign({ id: user._id }, configs.jwtSecret, { expiresIn: "30d" });
+        const accessToken = jwt.sign({ userID: user._id }, configs.jwtSecret, { expiresIn: "30d" });
         const refreshToken = await RefreshTokenModel.createToken(user);
         res.cookie(constants.accessToken, accessToken, {
             httpOnly: true,
